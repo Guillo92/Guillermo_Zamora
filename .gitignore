@@ -1,0 +1,79 @@
+/*Luces_1:juego de luces que comienza encendiendo los leds desde el pin 0 hasta el pin 13  y regresa apagandolos
+  Luces_2: juego de ludce que se encienden saltando  un led 
+  luces_3: juego de luces que encienden desde la mitad de los  leds  (pin7).
+
+NOMBRE: GUILLERMO ZAMORA
+FECHA : 30/10/16
+
+*/
+int leds [14]={0,1,2,3,4,5,6,7,8,9,10,11,12,13};       // vector de los 13 pines 
+int i=0;                                               // declaro variable i que sera como contador 
+
+
+void setup() {
+   pinMode(0,OUTPUT);                    //     5v al pin 0
+   pinMode(1,OUTPUT);                    //     5v al pin 1
+   pinMode(2,OUTPUT);                    //     5v al pin 2
+   pinMode(3,OUTPUT);                    //     5v al pin 3
+   pinMode(4,OUTPUT);                    //     5v al pin 4
+   pinMode(5,OUTPUT);                    //     5v al pin 5
+   pinMode(6,OUTPUT);                    //     5v al pin 6
+   pinMode(7,OUTPUT);                    //     5v al pin 7
+   pinMode(8,OUTPUT);                    //     5v al pin 8
+   pinMode(9,OUTPUT);                    //     5v al pin 9
+   pinMode(10,OUTPUT);                   //     5v al pin 10
+   pinMode(11,OUTPUT);                   //     5v al pin 11
+   pinMode(12,OUTPUT);                   //     5v al pin 12
+   pinMode(13,OUTPUT);                   //     5v al pin 13
+     }
+void luces_1 (){      // metodo de luces 1
+  for( ; i<14 ; i++)                    //ciclo for  para que enciendan los leds  desde el pin 0 hasta el 13 
+  {
+    digitalWrite (leds[i],HIGH);        //activa  los pines de  los leds  segun el contador (i)
+    delay (500);                        // retardo
+    
+  }
+  for(  ; i>=0 ; i--)                    //ciclo for  para que apaguen  los leds  desde el pin 13 hasta el 0
+  {
+    digitalWrite (leds[i],LOW);          //activa  los pines de  los leds  segun el contador (i)
+    delay (500);                           // retardo
+  }
+  
+}
+void luces_2 () {      // metodo luces 2 
+   for(i=1 ; i<14 ; i=i+2){                                  //ciclo for  para que enciendan los leds  desde el pin 0 hasta el 13 saltandoce un led 
+    digitalWrite (leds[i],HIGH);                                     //activa  los pines de  los leds  segun el contador (i)
+    delay (500);
+    
+  }
+  for( ; i>=0 ; i=i-2)
+  {
+    digitalWrite (leds[i],LOW);                                           // for para el regreso de apagado de los leds 
+    delay (500);
+  }
+}
+ 
+  void luces_3 (){       //metodos luces 3
+    for(int j=7;j<14;j++){                                     //ciclo for  para que enciendan los leds  desde el pin 7 hasta el 13  
+    
+      digitalWrite (leds[j], HIGH);                             //activa  los pines de  los leds  segun el contador (i)
+      delay (500);
+    }
+     for(int j=14;j>=7;j--){                                   // for para el regreso de apagado de los leds 
+      digitalWrite (leds[j], LOW);
+      delay (500);
+    }
+  }
+
+void loop() {
+luces_1 ();     //llamamos al metodo 1
+delay (290);    //retardo
+luces_2 ();     //llamamos al metodo 1
+delay (200);    //retardo
+luces_3 ();     //llamamos al metodo 1
+
+   
+  }
+  
+
+
