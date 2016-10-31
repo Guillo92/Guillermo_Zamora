@@ -1,0 +1,78 @@
+# Guillermo_Zamora
+Guillermo Xavier Zamora  Limaico
+//¿ QUE HACE?
+// primer juego de luces  prenden de forma  secuencial  y se apagan de igual maner  las veces que random lo permite con la condicion for
+// segundo juego de luces  encienden los leds desde arriba y de abajo  de 2 en 2 hasta el centro y se apagan de igual manera 
+// NOMBRE:GUILLERMO ZAMORA
+// FECHA:30/10/2016
+
+
+int swt_1=8;   //inisializacion de variables de los switchs 
+int swt_2=9;
+int leds[6]={1,2,3,4,5,6};    // vector de leds de cada pin 
+                              // declaracion de variables 
+int Nalea=0;
+int i;
+int j;
+int c1;
+int c2;
+void setup() {
+ 
+  pinMode(0,OUTPUT); //pin 0 como salida
+  pinMode(1,OUTPUT); //pin 1 como salida
+  pinMode(2,OUTPUT); //pin 2 como salida
+  pinMode(3,OUTPUT); //pin 3 como salida
+  pinMode(4,OUTPUT); //pin 4 como salida
+  pinMode(5,OUTPUT); //pin 5 como salida
+  pinMode (swt_1,INPUT); //pin8 como ENTRADA
+  pinMode (swt_2,INPUT);  //pin9 como ENTRADA
+
+}
+//juego 1 
+void juego_1(){   // metodo para cuando la condicion es 0 y 1 
+if(digitalRead(swt_1)==HIGH && digitalRead(swt_2)== LOW)     // condicion para  que ejecute el for  cuando esta en  alto y un bajo 
+{
+  Nalea=random(2);        // guardar el valor aleatorio de 0 a 5 
+  for(j=0;j<Nalea;j++ )   //repetitivo 
+{ 
+    for(i=0; i<6;i++)     
+    {
+      digitalWrite(i,HIGH);                               // llamado a los pines  en la pocicion i 
+      delay (500);                                        // retardo
+    }
+    for(i=6;i>=0;i--)
+    {         
+      digitalWrite(i,LOW);                                 // llamado  a los pines en la posicion i segun la condicion 
+      delay(500);                                          // retardo
+    }
+         i=0;                                              //reinicio de variable 
+}
+    delay(200);
+}
+//juego 2
+      else{                                                     // caso contrario 
+         if(digitalRead(swt_1)==LOW&&digitalRead(swt_2)==HIGH){   // condicion cuando el switch1 esta en bajo y el otro en alto 
+              delay(500);                                          // retardo
+              Nalea=random(10);  
+              for(j=0;j<Nalea;j++){
+                 for (c1 = 0, c2=5; c1 < 4; c1++,c2--) {            // condiciones para  encendido de los leds de arriba y de abajo 
+                    digitalWrite(c1, HIGH);                         // activa de c1 alto  segun la condicion 
+                    digitalWrite(c2, HIGH);                         // activa de c2 alto  segun la condicion 
+                    delay(500);
+                   }
+                  for (c1 = 2, c2=3; c2 < 6; c1--,c2++) {           // condicion de apagado de arriba y abajo
+                     digitalWrite(c1, LOW);                          // activa de c1 bajo  segun la condicion 
+                     digitalWrite(c2, LOW);                          //activa de c2 bajo  segun la condicion 
+                     delay(500);                                      // retardo
+                    }
+                 }
+       }
+
+        delay(500);
+      }
+}
+
+void loop() {
+  juego_1();                                                 // llamado al metodo 
+
+}
