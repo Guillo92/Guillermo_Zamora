@@ -1,0 +1,139 @@
+/*NOMBRE : GUILLERMO ZAMORA 
+ *FECHA : 17/11/2016
+  */
+
+
+
+//ESTE PROGRAMA ES UN  CONTADOR DE 0 A 999 CON DISPLAYS 
+// declaramos las variables nesesarias 
+int A=13;            // pin 13 del arduino declaramos  en variable A
+int B=12;            // pin 12 del arduino declaramos  en variable B
+int C=11;            // pin 11 del arduino declaramos  en variable C
+int D=10;            // pin 10 del arduino declaramos  en variable D
+int cont=0;          // declaracion de variable para el contador 
+
+// declaracion de variables de las unidades decenas y centenas 
+int unid=9;
+int dece=8;
+int cent=7;
+
+int contu=0;
+int contd=0;
+int contc=0;
+
+int conto=0;
+void setup() {
+  //colocamos todas  las entradas del arduino con 5v )
+  pinMode(A,OUTPUT);
+  pinMode(B,OUTPUT);
+  pinMode(C,OUTPUT);
+  pinMode(D,OUTPUT);
+  pinMode(unid,OUTPUT);
+  pinMode(dece,OUTPUT);
+  pinMode(cent,OUTPUT); 
+ }
+
+void loop() {
+ if (cont<999) // condicion if para realizar las siguientes condiciones 
+   {
+    cont ++;   // contador suma  hasta llegar a la condicion 
+    contc=cont/100; // obtener las centenas
+    digitalWrite(unid,LOW);
+    digitalWrite(dece,LOW);
+    digitalWrite(cent,HIGH);
+    Display(contc); // llamamos al metodo 
+    delay(100);// retardo
+    contd=((cont-(contc*100))/10);  //obtener decenas
+    digitalWrite(unid,LOW);
+    digitalWrite(dece,HIGH);
+    digitalWrite(cent,LOW);
+    Display(contd);    //llamado al metodo 
+    delay(100); // retardo 
+    conto=((cont-(contc*100))/10); //obtener las unidades 
+    contu=((cont-(contc*100))-conto*10);
+    digitalWrite(unid,HIGH);
+    digitalWrite(dece,LOW);
+    digitalWrite(cent,LOW);
+    Display(contu);
+    delay(100);
+   }
+
+}
+// metodo  
+void Display (int numero) {    
+  // numero de casos  de 0 al 9 para el display                   
+  switch (numero) {
+    // caso para el 0
+    case 0:                                   
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+      // caso para el 1 
+    case 1:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+      // caso para el 3 
+    case 2:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+    case 3:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+      // caso para el 4
+    case 4:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+      // caso para el 5
+    case 5:
+
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+       // caso para el 6
+
+    case 6:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+     // caso para el 7 
+    case 7:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+     // caso para el 8
+    case 8:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      break;
+      // caso para el 9 
+    case 9:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      break;
+
+  }
+}
