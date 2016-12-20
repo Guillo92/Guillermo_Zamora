@@ -1,0 +1,103 @@
+//NOMBRE: GUILLERMO ZAMORA 
+//MATERIA: SISTEMAS MICROPROCESADOS
+/* ESTE PREOGRAMA HACE QUE AL INGRESAR UNA CLAVE DE 4 DIGITOS SEGUN EL ORDEN DE LOS PINES 6689 
+ DE LOS PINES DEL ARDUINO SE ACTIVA UN SISTEMA CASO CONTRARIO AL SER INCORRECTA LA CLAVE  TENGO
+ UN INTENTO MAS Y LUEGO SI SE ENCUENTRA ERRONEA LA CLAVE DE BLOQUEA POR 30 SEGUNDOS*/ 
+ 
+ 
+//declaracion de variables de los pines  del arduin 
+int bn6=6;
+int bn7=7;
+int bn8=8;
+int bn9=9;
+int lb=11;
+int lm=12;
+int bloqueo=13;
+//....................................................
+int clave[]={0,0,2,3};              //declaramos las variables que ocupamos en el vector de 4 digitos
+int secuencia[]={10,10,10,10};
+int estado = 0;                     //variable de estado 
+int intentos = 2;                   //variable que se reinicia los intentos a 2 
+void setup() {
+  Serial.begin(9600);               //abre el puerto serial
+  pinMode(bn6,INPUT);               //boton que esta en el pin 6 de entrada
+  pinMode(bn7,INPUT);               //boton que esta en el pin 7 de entrada
+  pinMode(bn8,INPUT);               //boton que esta en el pin 8 de entrada
+  pinMode(bn9,INPUT);               //boton que esta en el pin 9 de entrada
+  pinMode(lb,OUTPUT);               //pin 11 de salida
+  pinMode(lm,OUTPUT);               //pin 6 de salida
+  pinMode(bloqueo,OUTPUT);}         //pin 13 de salida
+void loop() {  
+  seguridad ();
+}
+
+void seguridad(){
+  if(digitalRead(bn6)){               
+  secuencia[estado]=0;
+  estado++;
+  delay(500);}
+if(digitalRead(bn7)){
+  secuencia[estado]=1; 
+  estado++;
+  delay(500);}
+if(digitalRead(bn8)){ 
+  secuencia[estado]=2; 
+  estado++;
+  delay(500);}
+if(digitalRead(bn9)){
+  secuencia[estado]=3;
+  estado++; 
+  delay(500);}
+if(estado==4){
+    if((secuencia[0]==clave[0])&&(secuencia[1]==clave[1])&&(secuencia[2]==clave[2])&&(secuencia[3]==clave[3])){  //compra con los 4 botones que ingrese
+      digitalWrite(lb,HIGH);
+      Serial.println("SISTEMA ENCENDIDO");  
+      delay(250);
+      digitalWrite(lb,LOW);
+      delay(250);
+      digitalWrite(lb,HIGH);
+      delay(250);
+      digitalWrite(lb,LOW);
+      delay(250);
+      digitalWrite(lb,HIGH); 
+        
+      for(int i=0; i<256; i++){ 
+      analogWrite(lb,i);
+      delay(10);
+      }
+      //Se recorren los valores del 255 al 0 de mayor a menor igual que el for anterior.
+      for(int i=255; i>-1; i--){
+      analogWrite(lb,i);
+      delay(10);
+      }    
+      Serial.write(0x0d);      //limpiar el puerto serial
+      intentos=2;}
+    else {intentos--;
+    digitalWrite(lm,HIGH);
+    Serial.println("CLAVE ERRONEA");
+    delay(100);
+    digitalWrite(lm,LOW);
+    delay(500);    
+    digitalWrite(lm,HIGH);
+    delay(100);
+    }  
+    digitalWrite(lb,LOW);
+    digitalWrite(lm,LOW);
+    estado=0;}        
+if(intentos==0){
+  digitalWrite(bloqueo,HIGH);
+  Serial.println("SISTEMA BLOQUEADO");          
+    for(int n=29 ;n>0;n--){ // for para los 30 segundos de espera 
+    digitalWrite(bloqueo,HIGH);
+    delay(250);
+    digitalWrite(bloqueo,LOW);
+    delay(250);        
+    Serial.println(n);
+    delay(500);}     
+    Serial.write(0x0d);       //limpiar puerto serial
+       intentos=2;
+    Serial.println("INGRESE NUEVAMENTE");
+    }
+
+}
+
