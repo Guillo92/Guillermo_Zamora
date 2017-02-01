@@ -1,0 +1,97 @@
+# Guillermo_Zamora
+Guillermo Xavier Zamora  Limaico
+/*NOMBRE:GUILLERMO ZAMORA 
+ * PROGRAMA: ESTE ES UN JUEGO DE POCICIONES DE LETRAS QUE SALE EN EL LCD 
+ * 
+ */
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(9,8,7,6,5,4);
+int i=0;
+String  dato;
+void setup() {
+ Serial.begin(9600);
+lcd.begin(16,2);
+
+
+}
+
+void loop() {
+  lcd.display();
+   lcd.print("INGRESE PALABRA");
+   delay(1000);
+   lcd.clear();
+   delay(1000);
+ if (Serial.available()>0)
+   {
+    dato=Serial.readString();
+    Serial.println(dato);    
+    lcd.setCursor(0,0);
+    lcd.print(dato);
+    Serial.println("JUEGO DE DISPLAY");
+  
+    // guardamos en tam_texto el largo del texto que escribimos 
+    int tam_texto=dato.length();
+  for(int i=tam_texto; i>0 ; i--)
+  {    String texto = dato.substring(i-1);
+     // Limpiamos pantalla
+     lcd.setCursor(0,0);
+     lcd.print("                    ");
+    lcd.clear();
+     //Situamos el cursor
+    lcd.setCursor(0, 0);
+     // Escribimos el texto
+    lcd.print(dato);
+    // Esperamos
+    delay(60);
+  }
+  for(int i=1; i<=16;i++)
+  {
+    // Limpiamos pantalla
+    lcd.clear();
+ 
+    //Situamos el cursor
+    lcd.setCursor(i, 0);
+ 
+    // Escribimos el texto
+    lcd.print(dato);
+ 
+    // Esperamos
+   delay(60);
+  }
+  for(int i=16;i>=1;i--)
+  {
+    // Limpiamos pantalla
+    lcd.clear();
+ 
+    //Situamos el cursor
+    lcd.setCursor(i, 1);
+ 
+    // Escribimos el texto
+    lcd.print(dato);
+ 
+    // Esperamos
+    delay(60);
+  }
+ 
+  // Mostramos salida del texto por la izquierda
+  for(int i=1; i<=tam_texto ; i++)
+  {
+    String texto = dato.substring(i-1);
+ 
+    // Limpiamos pantalla
+    lcd.clear();
+ 
+    //Situamos el cursor
+    lcd.setCursor(0, 1);
+ 
+    // Escribimos el texto
+    lcd.print(texto);
+ 
+    // Esperamos
+   delay(60);
+  }
+  
+   }
+  i=0;
+}
+
