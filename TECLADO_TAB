@@ -1,0 +1,245 @@
+# Guillermo_Zamora
+Guillermo Xavier Zamora  Limaico
+/*         UNIVERSIDAD TÉCNICA DEL NORTE
+   NOMBRE: GUILLERMO ZAMORA
+   MATERIA: SISTEMAS MICROPROCESADOS
+   PROGRAMA: ESTE PROGRAMA REALIZA UN TECLADO TAB CON UN KEYPAD Y QUE SE VISUALIZA EN LA LCD , EL TECLADO FUNCIONA COMO LOS TELEFONOS
+   ANTICUAS QUE SE PRECIONA LA TECLA VARIAS VECES HASTA ENCONTRAR LA PALABRA DECEADA.
+
+*/
+#include <Keypad.h>              // libreria keypad
+#include <LiquidCrystal.h>       //libreia  LCD
+#include <TimerOne.h>            //libreria timeone
+LiquidCrystal lcd (13, 12, 11, 10, 9, 8); //declaramos el lcd con los pines a usar
+//declaracion de variables a usar
+int contador = 6;
+int posicion = 0;
+int cont1 = 0;
+int cont2 = 3;
+int cont3 = 6;
+int cont4 = 9;
+int cont5 = 12;
+int cont6 = 15;
+int cont7 = 19;
+int cont8 = 22;
+char letra;
+const byte ROWS = 4; //declaramos 4 filas
+const byte COLS = 4; //declaramos 4 columnas
+//configuracion  del teclado
+char hexaKeys[ROWS][COLS] = {
+  {'1', '2', '3', ' '},
+  {'4', '5', '6', ' '},
+  {'7', '8', '9', ' '},
+  {'*', '0', '#', ' '}
+};
+//pines al teclado
+byte rowPins[ROWS] = {3, 2, 1, 0};
+byte colPins[COLS] = {7, 6, 5, 4};
+
+//Inicializamos las variables en el teclado
+Keypad customKeypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
+
+void setup() {
+
+  lcd.begin(16, 2); //LCD de 16x2
+  Timer1.initialize(150000);
+  Timer1.attachInterrupt(espera);
+}
+
+void loop() {
+
+  char customKey = customKeypad.getKey();
+  if (customKey)        // si el teclado
+  {
+    if (customKey == '1')   // si se presiona en el teclado 1
+    {
+      lcd.setCursor(posicion, 0); // imprime en el lcd  en la pocicion de la variable (posicion) y en la fila 0 del ldc 
+      lcd.print('1');     // imprime  
+      contador = 0;
+    }
+    if (customKey == '2') { // si el teclado =2 
+      cont1++;
+      letras(cont1);    // almacena 
+      lcd.setCursor(posicion, 0); // imprime en el lcd  en la pocicion de la variable (posicion) y en la fila 0 del ldc 
+      lcd.print(letra);  // IMPRIME 
+      if (cont1 == 3) {
+        cont1 = 0;
+      }
+      contador = 0;
+    }
+    if (customKey == '3') {
+      cont2++;
+      letras(cont2);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont2 == 6) {
+        cont2 = 3;
+      }
+      contador = 0;
+    }
+    if (customKey == '4') {
+      cont3++;
+      letras(cont3);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont3 == 9) {
+        cont3 = 6;
+      }
+      contador = 0;
+    }
+    if (customKey == '5') {
+      cont4++;
+      letras(cont4);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont4 == 12) {
+        cont4 = 9;
+      }
+      contador = 0;
+    }
+    if (customKey == '6') {
+      cont5++;
+      letras(cont5);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont5 == 15) {
+        cont5 = 12;
+      }
+      contador = 0;
+    }
+    if (customKey == '7') {
+      cont6++;
+      letras(cont6);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont6 == 19) {
+        cont6 = 15;
+      }
+      contador = 0;
+    }
+
+    if (customKey == '8') {
+      cont7++;
+      letras(cont7);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont7 == 22) {
+        cont7 = 19;
+      }
+      contador = 0;
+    }
+    if (customKey == '9') {
+      cont8++;
+      letras(cont8);
+      lcd.setCursor(posicion, 0);
+      lcd.print(letra);
+      if (cont8 == 26) {
+        cont8 = 22;
+      }
+      contador = 0;
+    }
+    if (customKey == '0') {
+      lcd.setCursor(posicion, 0);
+      lcd.print(' ');
+      contador = 0;
+    }
+  }
+}
+char letras(int dato) {
+  // CASOS 
+  switch (dato) {
+    case 1:
+      letra = 'a';
+      break;
+    case 2:
+      letra = 'b';
+      break;
+    case 3:
+      letra = 'c';
+      break;
+    case 4:
+      letra = 'd';
+      break;
+    case 5:
+      letra = 'e';
+      break;
+    case 6:
+      letra = 'f';
+      break;
+    case 7:
+      letra = 'g';
+      break;
+    case 8:
+      letra = 'h';
+      break;
+    case 9:
+      letra = 'i';
+      break;
+    case 10:
+      letra = 'j';
+      break;
+    case 11:
+      letra = 'k';
+      break;
+    case 12:
+      letra = 'l';
+      break;
+    case 13:
+      letra = 'm';
+      break;
+    case 14:
+      letra = 'n';
+      break;
+    case 15:
+      letra = 'o';
+      break;
+    case 16:
+      letra = 'p';
+      break;
+    case 17:
+      letra = 'q';
+      break;
+    case 18:
+      letra = 'r';
+      break;
+    case 19:
+      letra = 's';
+      break;
+    case 20:
+      letra = 't';
+      break;
+    case 21:
+      letra = 'u';
+      break;
+    case 22:
+      letra = 'v';
+      break;
+    case 23:
+      letra = 'w';
+      break;
+    case 24:
+      letra = 'x';
+      break;
+    case 25:
+      letra = 'y';
+      break;
+    case 26:
+      letra = 'z';
+      break;
+  }
+  return letra;
+}
+void espera() {
+  contador++;
+  if (contador == 6) {
+    posicion++;
+    cont1 = 0;
+    cont2 = 3;
+    cont3 = 6;
+    cont4 = 9;
+    cont5 = 12;
+    cont6 = 15;
+    cont7 = 19;
+    cont8 = 22;
+  }
+}
